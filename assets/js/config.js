@@ -2,9 +2,11 @@ window.PETSTAY_CONFIG = {
   AWS_REGION: "us-east-2",
   COGNITO_USER_POOL_ID: 'us-east-2_xY7Mf98Hk',
   COGNITO_USER_POOL_CLIENT_ID: 'acrr8036vgbsdlnv2pg1rploa',
-  COGNITO_DOMAIN: 'https://us-east-2xy7mf98hk.auth.us-east-2.amazoncognito.com',
+  COGNITO_DOMAIN: 'us-east-2xy7mf98hk.auth.us-east-2.amazoncognito.com',
+
   REDIRECT_SIGN_IN_URL: 'https://main.d1f86unaot6kvq.amplifyapp.com/admin-frontend/post-login.html',
   REDIRECT_SIGN_OUT_URL: 'https://main.d1f86unaot6kvq.amplifyapp.com/index.html',
+  
   BOOKINGS_API_URL: 'https://byiad6vr62.execute-api.us-east-2.amazonaws.com/prod',
   ROOMS_AVAILABILITY_API_URL: '',
   NEW_BOOKING_API_URL: 'https://byiad6vr62.execute-api.us-east-2.amazonaws.com/prod',
