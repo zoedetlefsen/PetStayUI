@@ -337,28 +337,37 @@
 
             try {
               const statusRes = await fetch(url);
+              const text = await statusRes.text(); // handle non-JSON gracefully
               let statusData;
-
               try {
-                statusData = await statusRes.json();
-              } catch (jsonErr) {
-                const raw = await statusRes.text();
-                throw new Error("Failed to parse JSON. Raw response:\n" + raw.slice(0, 200));
+                statusData = JSON.parse(text);
+              } catch {
+                throw new Error("Status API returned non-JSON:\n" + text.slice(0, 200));
               }
 
               console.log(`Polling attempt ${tries}:`, statusData);
 
-              const status = statusData.status?.toUpperCase();
+              const status = (statusData.status || "").toUpperCase();
+
               if (status === "SUCCEEDED") {
-                const { BookingID, OwnerName } = statusData.output || {};
-                if (BookingID && OwnerName) {
-                  sessionStorage.setItem("BookingID", BookingID);
-                  sessionStorage.setItem("OwnerName", OwnerName);
-                  window.location.href = `booking-success.html?bookingId=${BookingID}`;
+                // output could be a JSON string or already an object
+                let out = statusData.output;
+                if (typeof out === "string") {
+                  try { out = JSON.parse(out); } catch { /* leave as string */ }
+                }
+
+                const bookingId = out?.bookingId || out?.BookingID;
+                const ownerName = out?.OwnerName || out?.ownerName;
+
+                if (bookingId && ownerName) {
+                  sessionStorage.setItem("bookingId", bookingId);   // use camelCase going forward
+                  sessionStorage.setItem("OwnerName", ownerName);
+                  window.location.href = `booking-success.html?bookingId=${encodeURIComponent(bookingId)}`;
                 } else {
                   hideLoading();
                   alert("Booking succeeded, but booking ID or owner name is missing.");
                 }
+
               } else if (status === "RUNNING" || status === "IN_PROGRESS") {
                 if (tries >= maxTries) {
                   hideLoading();
@@ -366,9 +375,14 @@
                 } else {
                   setTimeout(poll, 2000);
                 }
+              } else if (status === "FAILED") {
+                hideLoading();
+                // surface failure reason if your status API includes it
+                const reason = statusData.cause || statusData.error || "Unknown error";
+                alert(`Booking failed.\nReason: ${reason}`);
               } else {
                 hideLoading();
-                alert(`Booking failed with status: ${status}`);
+                alert(`Unexpected booking status: ${status || "N/A"}`);
               }
 
             } catch (err) {
@@ -376,7 +390,8 @@
               console.error("Polling error:", err);
               alert("Error while checking booking status:\n" + err.message);
             }
-          }
+        }
+
 
           poll();
 
