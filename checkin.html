@@ -91,7 +91,7 @@
         const response = await fetch(`${window.PETSTAY_CONFIG.BOOKING_API_URL}/${bookingId}?t=${Date.now()}`);
         const booking = await response.json();
 
-        if (response.ok && booking.BookingID) {
+        if (response.ok && booking.bookingId) {
           renderBookingInfo(booking);
         } else {
           document.getElementById("result").innerHTML = "<span class='text-danger'>No booking found.</span>";

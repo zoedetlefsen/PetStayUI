@@ -370,15 +370,15 @@
         // Filter bookings by time range
         let filteredBookings = bookings;
         if (filter === "Today") {
-          filteredBookings = bookings.filter(b => b.CheckInDate === todayISO);
+          filteredBookings = bookings.filter(b => b.checkInDate === todayISO);
         } else if (filter === "Weekly") {
           const weekAgo = new Date();
           weekAgo.setDate(today.getDate() - 7);
-          filteredBookings = bookings.filter(b => new Date(b.CheckInDate) >= weekAgo);
+          filteredBookings = bookings.filter(b => new Date(b.checkInDate) >= weekAgo);
         } else if (filter === "Monthly") {
           const monthAgo = new Date();
           monthAgo.setDate(today.getDate() - 30);
-          filteredBookings = bookings.filter(b => new Date(b.CheckInDate) >= monthAgo);
+          filteredBookings = bookings.filter(b => new Date(b.checkInDate) >= monthAgo);
         }
 
         // Count Checked-In bookings
