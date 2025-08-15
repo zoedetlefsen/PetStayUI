@@ -11,7 +11,7 @@ window.PETSTAY_CONFIG = {
   API_BASE_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed',
   BOOKING_API_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/booking',
   BOOKING_STATUS_API_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/bookingStatus',
-  BOOKINGS_API_URL: `https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/bookings`,
+  BOOKINGS_API_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/bookings',
   ROOMS_AVAILABILITY_API_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/rooms/availability',
   NEW_BOOKING_API_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/newbooking',
   CONFIRM_BOOKING_URL: 'https://sqxjb1dqb8.execute-api.us-east-2.amazonaws.com/deployed/confirm',
